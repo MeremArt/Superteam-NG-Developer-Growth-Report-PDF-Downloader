@@ -49,7 +49,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className="title">Superteam NG Developer Growth Report</h1>
+        <h1 className="title">SuperteamNG SW Developer Growth Report</h1>
         <p className="subtitle">Q1 2025 – Building Tomorrow, Today</p>
 
         <div className="download-container">
