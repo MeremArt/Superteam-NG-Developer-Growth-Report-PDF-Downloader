@@ -1,103 +1,188 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import Head from "next/head";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadComplete, setDownloadComplete] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Solana brand colors
+  const solanaColors = {
+    purple: "#9945FF",
+    green: "#14F195",
+    teal: "#00C2FF",
+    blue: "#0047AB",
+    gradient: "linear-gradient(to right, #9945FF, #14F195)",
+  };
+
+  const handleDownload = () => {
+    setIsDownloading(true);
+
+    // Simulate download delay
+    setTimeout(() => {
+      const link = document.createElement("a");
+      link.href = "/report.pdf"; // Path to your PDF report
+      link.download = "SuperteamNG_DevGrowth_Q1_2025.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setIsDownloading(false);
+      setDownloadComplete(true);
+
+      // Reset success state after 3 seconds
+      setTimeout(() => {
+        setDownloadComplete(false);
+      }, 3000);
+    }, 2000);
+  };
+
+  return (
+    <div className="container">
+      <Head>
+        <title>SuperteamNG SW Developer Growth Report – Q1 2025</title>
+        <meta
+          name="description"
+          content="Download the Superteam NG Developer Growth Report – Q1 2025, showcasing the vibrant developer ecosystem in Southwest Nigeria."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main>
+        <h1 className="title">Superteam NG Developer Growth Report</h1>
+        <p className="subtitle">Q1 2025 – Building Tomorrow, Today</p>
+
+        <div className="download-container">
+          <button
+            className={`download-button ${isDownloading ? "downloading" : ""} ${
+              downloadComplete ? "complete" : ""
+            }`}
+            onClick={handleDownload}
+            disabled={isDownloading}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            {isDownloading ? (
+              <div className="loader">
+                <div className="loader-circle"></div>
+              </div>
+            ) : downloadComplete ? (
+              <span className="check-mark">✓</span>
+            ) : (
+              "Download Report PDF"
+            )}
+          </button>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      <style jsx>{`
+        .container {
+          min-height: 100vh;
+          padding: 0 1rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: #121212;
+          color: white;
+        }
+        main {
+          padding: 4rem 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+        .title {
+          margin: 0;
+          font-size: 3.5rem;
+          background: ${solanaColors.gradient};
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          line-height: 1.2;
+        }
+        .subtitle {
+          margin: 1rem 0 3rem;
+          font-size: 1.5rem;
+          color: #cccccc;
+        }
+        .download-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .download-button {
+          position: relative;
+          padding: 1rem 2rem;
+          font-size: 1.2rem;
+          font-weight: bold;
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+          background: ${solanaColors.purple};
+          color: white;
+          transition: all 0.3s ease;
+          min-width: 220px;
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          box-shadow: 0 10px 20px rgba(153, 69, 255, 0.3);
+        }
+        .download-button:hover {
+          background: ${solanaColors.teal};
+          transform: translateY(-3px);
+          box-shadow: 0 15px 25px rgba(153, 69, 255, 0.4);
+        }
+        .download-button:active {
+          transform: translateY(-1px);
+        }
+        .download-button.downloading {
+          background: ${solanaColors.blue};
+          cursor: not-allowed;
+        }
+        .download-button.complete {
+          background: ${solanaColors.green};
+        }
+        .loader {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .loader-circle {
+          width: 25px;
+          height: 25px;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-top: 3px solid white;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        .check-mark {
+          font-size: 1.5rem;
+        }
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
+
+      <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+        }
+        * {
+          box-sizing: border-box;
+        }
+      `}</style>
     </div>
   );
 }
